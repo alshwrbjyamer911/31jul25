@@ -1,0 +1,10 @@
+2025-07-30 19:59:51,538 [INFO] Activator:176 - 
+
+
+2025-07-30 19:59:51,541 [INFO] Activator:177 - !SESSION log4j initialized
+2025-07-30 19:59:53,829 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SWT Webkit: Warning, You are using an old version of webkitgtk. (pre 2.4) BrowserFunction functionality will not be available
+2025-07-30 19:59:53,830 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SWT WebKit: error initializing DBus server, dBusServer == 0
+2025-07-30 19:59:55,727 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2025-07-30 20:00:16,821 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2025-07-30 20:00:16,821 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2025-07-30 20:00:16,822 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.

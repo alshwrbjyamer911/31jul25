@@ -1,0 +1,128 @@
+#include "ryrl898.h"
+#include <string.h>
+#include <stdio.h>
+
+uint8_t uart_rx_buffer[100];
+uint8_t uart6passwotd[14];
+
+LoRaConfig_t lora_config;
+
+void lora_init() {
+    lora_config.receiver_id = get_id();
+    lora_config.receiver_addr = get_address();
+
+    HAL_UART_Transmit(&LORA_UART_HANDLE, LORA_AT_BAND, sizeof(LORA_AT_BAND)-1, 100);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, LORA_AT_PWD, sizeof(LORA_AT_PWD)-1, 100);
+}
+
+uint8_t lora_receive() {
+    return receive_message();
+}
+
+uint8_t receive_message() {
+    memset(uart_rx_buffer, 0, sizeof(uart_rx_buffer));
+    uint8_t cmd = 0;
+    HAL_UART_Receive(&LORA_UART_HANDLE, uart_rx_buffer, sizeof(uart_rx_buffer), 100);
+
+    if (strstr((char*)uart_rx_buffer, "+RCV=")) {
+        cmd = process_message((char*)uart_rx_buffer);
+    }
+    return cmd;
+}
+
+uint8_t process_message(const char *message) {
+    int address = 0, rssi = 0, length = 0;
+    char data = 0;
+    sscanf(message, "+RCV=%d,%d,%c,%d,%*d", &address, &length, &data, &rssi);
+    return (uint8_t)data;
+}
+
+void lora_send_char(uint8_t data) {
+    char buffer[50] = {0};
+    sprintf(buffer, "AT+SEND=%d,1,%c\r\n", lora_config.receiver_addr, data);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, (uint8_t*)buffer, strlen(buffer), 100);
+}
+
+void lora_send_data(uint8_t *pdata, uint16_t len) {
+    char buffer[250] = {0};
+    sprintf(buffer, "AT+SEND=%d,%d,%s\r\n", lora_config.receiver_addr, len, pdata);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, (uint8_t*)buffer, strlen(buffer), 100);
+}
+
+uint16_t get_id() {
+    char buffer[25] = {0};
+    uint16_t id = 0;
+
+    HAL_UART_Transmit(&LORA_UART_HANDLE, LORA_AT_GETID, sizeof(LORA_AT_GETID)-1, 100);
+    HAL_UART_Receive(&LORA_UART_HANDLE, (uint8_t*)buffer, sizeof(buffer), 100);
+
+    sscanf(buffer, "+NETWORKID=%hu", &id);
+    lora_config.id = id;
+
+    return (IAM == LORA_ROLE_TRANSMITTER) ? id + 1 : id - 1;
+}
+
+uint16_t get_address() {
+    char buffer[25] = {0};
+    uint16_t addr = 0;
+
+    HAL_UART_Transmit(&LORA_UART_HANDLE, LORA_AT_GETADDR, sizeof(LORA_AT_GETADDR)-1, 100);
+    HAL_UART_Receive(&LORA_UART_HANDLE, (uint8_t*)buffer, sizeof(buffer), 100);
+
+    sscanf(buffer, "+ADDRESS=%hu", &addr);
+    lora_config.addr = addr;
+
+    return (IAM == LORA_ROLE_TRANSMITTER) ? addr + 1 : addr - 1;
+}
+
+void lora_set_address(uint16_t addr) {
+    char buffer[50] = {0};
+    sprintf(buffer, "AT+ADDRESS=%d\r\n", addr);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, (uint8_t*)buffer, strlen(buffer), 100);
+}
+
+void lora_set_network_id(uint16_t netid) {
+    char buffer[50] = {0};
+    sprintf(buffer, "AT+NETWORKID=%d\r\n", netid);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, (uint8_t*)buffer, strlen(buffer), 100);
+}
+
+void lora_set_band(const char *freq) {
+    char buffer[50] = {0};
+    sprintf(buffer, "AT+BAND=%s\r\n", freq);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, (uint8_t*)buffer, strlen(buffer), 100);
+}
+
+void lora_set_password(const char *pwd) {
+    char buffer[50] = {0};
+    sprintf(buffer, "AT+PASSWORD=%s\r\n", pwd);
+    HAL_UART_Transmit(&LORA_UART_HANDLE, (uint8_t*)buffer, strlen(buffer), 100);
+}
+
+void lora_apply_config() {
+    lora_set_address(lora_config.addr);
+    lora_set_band(lora_config.band);
+    lora_set_network_id(lora_config.id);
+    lora_set_password(lora_config.password);
+}
+
+// void getargs_ryrl898() {
+//     HAL_UART_Transmit(&huart6, (uint8_t*)"Write the config and start by edit password for default password contact alebel\r\n", 84, 1000);
+//     HAL_UART_Receive(&huart6, (uint8_t*)lora_config.password, sizeof(lora_config.password)-1, HAL_MAX_DELAY);
+
+//     HAL_UART_Transmit(&huart6, (uint8_t*)"Write the id:\r\n", 15, 1000);
+//     char id_buf[6] = {0};
+//     HAL_UART_Receive(&huart6, (uint8_t*)id_buf, sizeof(id_buf)-1, HAL_MAX_DELAY);
+//     lora_config.id = atoi(id_buf);
+
+//     HAL_UART_Transmit(&huart6, (uint8_t*)"Write the address:\r\n", 20, 1000);
+//     char addr_buf[6] = {0};
+//     HAL_UART_Receive(&huart6, (uint8_t*)addr_buf, sizeof(addr_buf)-1, HAL_MAX_DELAY);
+//     lora_config.addr = atoi(addr_buf);
+
+//     HAL_UART_Transmit(&huart6, (uint8_t*)"Enter band:\r\n", 13, 1000);
+//     HAL_UART_Receive(&huart6, (uint8_t*)lora_config.band, sizeof(lora_config.band)-1, HAL_MAX_DELAY);
+
+//     lora_config.receiver_id = (IAM == LORA_ROLE_TRANSMITTER) ? lora_config.id + 1 : lora_config.id - 1;
+// }
+

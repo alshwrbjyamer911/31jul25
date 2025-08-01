@@ -1,0 +1,57 @@
+2025-07-09 01:50:47,225 [INFO] WebApp:191 - Connection restablished
+2025-07-09 01:50:49,705 [INFO] WebApp:194 - Connection lost
+2025-07-09 01:50:49,933 [INFO] WebApp:191 - Connection restablished
+2025-07-09 01:56:15,762 [INFO] WebApp:194 - Connection lost
+2025-07-09 16:32:26,238 [INFO] WebApp:191 - Connection restablished
+2025-07-09 16:32:28,878 [INFO] WebApp:194 - Connection lost
+2025-07-09 16:32:29,033 [INFO] WebApp:191 - Connection restablished
+2025-07-09 17:55:37,036 [INFO] WebApp:194 - Connection lost
+2025-07-09 18:32:47,474 [INFO] WebApp:191 - Connection restablished
+2025-07-09 18:32:50,219 [INFO] WebApp:194 - Connection lost
+2025-07-09 18:32:50,390 [INFO] WebApp:191 - Connection restablished
+2025-07-09 19:45:16,869 [INFO] Gpio:278 - dependency for GPIO [SPI1, UART5, USART1]
+2025-07-09 19:45:33,550 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,2,27,479x349,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-07-09 19:45:42,865 [INFO] Gpio:278 - dependency for GPIO [SPI1, UART5, USART1]
+2025-07-09 19:45:50,170 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 275847112 Bytes (846200832)
+2025-07-09 19:45:52,457 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 515459000 Bytes (846200832)
+2025-07-09 19:45:52,701 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-07-09 19:45:52,701 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: TIM1_8
+2025-07-09 19:45:52,701 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SYS
+2025-07-09 19:45:52,701 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: RCC
+2025-07-09 19:45:52,702 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: NVIC
+2025-07-09 19:45:52,702 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-07-09 19:45:52,702 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: UART
+2025-07-09 19:45:52,703 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: GPIO
+2025-07-09 19:45:52,704 [INFO] CodeGenerator:892 - code generatio: config db path: /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.common.mx_6.15.0.202507011659//db/
+2025-07-09 19:45:52,887 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/MXTmpFiles/license.tmp_save
+2025-07-09 19:45:53,295 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/MXTmpFiles/license.tmp
+2025-07-09 19:45:53,356 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/MXTmpFiles/gpio.tmp_save
+2025-07-09 19:45:53,504 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/MXTmpFiles/gpio.tmp
+2025-07-09 19:45:53,756 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Src/stm32f4xx_it.c_save
+2025-07-09 19:45:54,025 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Src/stm32f4xx_it.c
+2025-07-09 19:45:54,027 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Inc/stm32f4xx_it.h_save
+2025-07-09 19:45:54,106 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Inc/stm32f4xx_it.h
+2025-07-09 19:45:54,113 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Src/stm32f4xx_hal_msp.c_save
+2025-07-09 19:45:54,275 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Src/stm32f4xx_hal_msp.c
+2025-07-09 19:45:54,276 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/MXTmpFiles/system.tmp_save
+2025-07-09 19:45:54,351 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/MXTmpFiles/system.tmp
+2025-07-09 19:45:54,356 [INFO] CodeEngine:321 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Inc/stm32f4xx_hal_conf.h_save
+2025-07-09 19:45:54,443 [INFO] CodeEngine:345 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Inc/stm32f4xx_hal_conf.h
+2025-07-09 19:45:54,466 [INFO] ApiDbMcu:532 - Load IP Config File for SPI1
+2025-07-09 19:45:54,491 [INFO] ApiDbMcu:532 - Load IP Config File for TIM2
+2025-07-09 19:45:54,494 [INFO] ApiDbMcu:532 - Load IP Config File for UART5
+2025-07-09 19:45:54,498 [INFO] ApiDbMcu:532 - Load IP Config File for USART1
+2025-07-09 19:45:54,500 [WARN] IPConfigManager:3811 - IP not found : TIM
+2025-07-09 19:45:54,501 [WARN] CodeGenerator:4259 - IP not found : null
+2025-07-09 19:45:54,504 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Inc/main.h_save
+2025-07-09 19:45:54,643 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Inc/main.h
+2025-07-09 19:45:54,645 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Src/main.c_save
+2025-07-09 19:45:54,794 [INFO] CodeEngine:289 - Generated code: /home/amer/STM32CubeIDE/workspace_1.19.0/rcmodela/Core/Src/main.c
+2025-07-09 19:45:55,162 [INFO] ProjectBuilder:3606 - Time for Copy HAL[1] : 59mS.
+2025-07-09 19:45:55,165 [INFO] ProjectBuilder:5216 - Project Generator version: 4.7.0-B52
+2025-07-09 19:45:55,286 [INFO] ConfigFileManager:1595 - The Die is : DIE413
+2025-07-09 19:45:56,194 [INFO] ProjectBuilder:5496 - Time for Generating toolchain IDE Files: 1029mS.
+2025-07-09 19:45:56,194 [INFO] ProjectBuilder:3463 - Time for Copy CMSIS : 0mS.
+2025-07-09 19:45:56,195 [INFO] ProjectBuilder:3463 - Time for Copy CMSIS : 1mS.
+2025-07-09 22:42:13,930 [INFO] WebApp:194 - Connection lost
+2025-07-09 22:42:17,421 [INFO] WebApp:191 - Connection restablished

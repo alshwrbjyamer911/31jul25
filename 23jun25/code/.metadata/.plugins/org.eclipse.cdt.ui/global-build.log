@@ -1,0 +1,37 @@
+05:12:23 **** Incremental Build of configuration Debug for project transmitter ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/lora.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lora.d" -MT"Core/Src/lora.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lora.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/lora.cpp: In function 'uint8_t process_message(const char*)':
+../Core/Src/lora.cpp:45:37: warning: format '%d' expects argument of type 'int*', but argument 7 has type 'int' [-Wformat=]
+   45 |  sscanf(message, "+RCV=%d,%d,%c,%d,%d",&address,&lenth,&data,&rssi,NULL);
+      |                                    ~^
+      |                                     |
+      |                                     int*
+../Core/Src/lora.cpp: In function 'uint8_t get_id()':
+../Core/Src/lora.cpp:62:37: warning: format '%d' expects argument of type 'int*', but argument 3 has type 'uint8_t*' {aka 'unsigned char*'} [-Wformat=]
+   62 |  sscanf((char*)buffer, "+NETWORKID=%d", &my_id);
+      |                                    ~^   ~~~~~~
+      |                                     |   |
+      |                                     |   uint8_t* {aka unsigned char*}
+      |                                     int*
+      |                                    %hhd
+../Core/Src/lora.cpp: In function 'uint8_t get_address()':
+../Core/Src/lora.cpp:74:34: warning: format '%d' expects argument of type 'int*', but argument 3 has type 'uint8_t*' {aka 'unsigned char*'} [-Wformat=]
+   74 |  sscanf((char*)buffer,"+ADDRESS=%d",&my_addr);
+      |                                 ~^  ~~~~~~~~
+      |                                  |  |
+      |                                  |  uint8_t* {aka unsigned char*}
+      |                                  int*
+      |                                 %hhd
+arm-none-eabi-g++ -o "transmitter.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/amer/Work/Elebel/23jun25/code/transmitter/STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="transmitter.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: transmitter.elf
+ 
+arm-none-eabi-size   transmitter.elf 
+arm-none-eabi-objdump -h -S  transmitter.elf  > "transmitter.list"
+   text	   data	    bss	    dec	    hex	filename
+  19756	    120	   2032	  21908	   5594	transmitter.elf
+Finished building: default.size.stdout
+ 
+Finished building: transmitter.list
+ 

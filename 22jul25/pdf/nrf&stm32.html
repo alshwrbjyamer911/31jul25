@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>nrf&stm32.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/*
+ * Visual Studio 2015 dark style
+ * Author: Nicolas LLOBERA <nllobera@gmail.com>
+ */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #1E1E1E;
+  color: #DCDCDC;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-symbol,
+.hljs-name {
+  color: #569CD6;
+}
+.hljs-link {
+  color: #569CD6;
+  text-decoration: underline;
+}
+
+.hljs-built_in,
+.hljs-type {
+  color: #4EC9B0;
+}
+
+.hljs-number,
+.hljs-class {
+  color: #B8D7A3;
+}
+
+.hljs-string,
+.hljs-meta-string {
+  color: #D69D85;
+}
+
+.hljs-regexp,
+.hljs-template-tag {
+  color: #9A5334;
+}
+
+.hljs-subst,
+.hljs-function,
+.hljs-title,
+.hljs-params,
+.hljs-formula {
+  color: #DCDCDC;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #57A64A;
+  font-style: italic;
+}
+
+.hljs-doctag {
+  color: #608B4E;
+}
+
+.hljs-meta,
+.hljs-meta-keyword,
+.hljs-tag {
+  color: #9B9B9B;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #BD63C5;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-builtin-name {
+  color: #9CDCFE;
+}
+
+.hljs-section {
+  color: gold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/*.hljs-code {
+  font-family:'Monospace';
+}*/
+
+.hljs-bullet,
+.hljs-selector-tag,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #D7BA7D;
+}
+
+.hljs-addition {
+  background-color: #144212;
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-deletion {
+  background-color: #600;
+  display: inline-block;
+  width: 100%;
+}
+
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///home/amer/Work/Elebel/22jul25/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///home/amer/Work/Elebel/22jul25/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <!-- Title Slide -->
+<h1 id="%F0%9F%93%A1-embedded-system-design-report">📡 Embedded System Design Report</h1>
+<h3 id="stm32g030f6p--nrf24l01--max30102">STM32G030F6P + nRF24L01+ + MAX30102</h3>
+<hr>
+<blockquote>
+<p>This report outlines the hardware configuration, software setup, and communication protocol design for a low-cost embedded system that collects biometric data and transmits it wirelessly using a minimal BOM design approach.</p>
+</blockquote>
+<h2 id="%F0%9F%94%A7-project-components">🔧 Project Components</h2>
+<h3 id="1-stm32g030f6p6">1. STM32G030F6P6</h3>
+<ul>
+<li><strong>Core</strong>: ARM Cortex-M0+ @ 64 MHz</li>
+<li><strong>Flash</strong>: 32 KB</li>
+<li><strong>RAM</strong>: 8 KB</li>
+<li><strong>Package</strong>: TSSOP20</li>
+<li><strong>Oscillator</strong>: Internal HSI RC oscillator used (no external crystal)</li>
+</ul>
+<hr>
+<h3 id="2-nrf24l01">2. nRF24L01+</h3>
+<ul>
+<li><strong>Wireless transceiver</strong> operating at 2.4 GHz</li>
+<li>Interface: <strong>SPI</strong></li>
+<li>Application: Wireless data transmission to another node</li>
+<li>📄 <a href="https://www.nordicsemi.com/-/media/DocLib/Other/Product_Spec/nRF24L01P_PS_v1_0.pdf">Datasheet</a><br>
+--</li>
+</ul>
+<h3 id="3-max30102">3. MAX30102</h3>
+<ul>
+<li>Integrated <strong>pulse oximetry</strong> and <strong>heart-rate sensor</strong></li>
+<li>Interface: <strong>I2C</strong></li>
+<li>📄 <a href="https://datasheets.maximintegrated.com/en/ds/MAX30102.pdf">Datasheet</a></li>
+</ul>
+<hr>
+<h2 id="%F0%9F%94%8C-peripheral-configuration">🔌 Peripheral Configuration</h2>
+<h3 id="spi-interface-for-nrf24l01">SPI Interface (for nRF24L01+)</h3>
+<ul>
+<li><strong>Clock speed</strong>: 64 MHz system clock</li>
+<li><strong>Prescaler</strong>: 8</li>
+<li><strong>SPI Speed</strong>: 8 MHz</li>
+<li>Chosen for high-speed communication while staying within the nRF24L01+ supported SPI limits (~10 MHz max)</li>
+</ul>
+<hr>
+<h3 id="i2c-interface-for-max30102">I2C Interface (for MAX30102)</h3>
+<ul>
+<li>Internal <strong>pull-up resistors</strong> used in software</li>
+<li><strong>Clock speed</strong>: 100 kHz</li>
+<li>MAX30102 I2C address (default): <code>0x57</code></li>
+</ul>
+<hr>
+<h3 id="%F0%9F%9B%A0%EF%B8%8F-i2c-pull-up-problem-and-solution">🛠️ I2C Pull-Up Problem and Solution</h3>
+<h4 id="%F0%9F%93%8D-problem">📍 Problem</h4>
+<p>I2C lines are <strong>open-drain</strong> and require pull-up resistors to define a logical HIGH state. Without them, the lines float, resulting in:</p>
+<ul>
+<li>Signal integrity issues</li>
+<li>Unstable or failed communication</li>
+<li>NACKs or device lockups</li>
+</ul>
+<h4 id="%F0%9F%A7%AA-solutions">🧪 Solutions</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware</td>
+<td>Use <strong>external pull-up resistors</strong> (2.2kΩ–10kΩ) — standard and recommended for production</td>
+</tr>
+<tr>
+<td>Software</td>
+<td>Enable <strong>internal STM32 pull-up resistors</strong> via GPIO settings — acceptable for prototyping</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>✅ <strong>Chosen Approach</strong>:</p>
+<blockquote>
+<p>Used the <strong>software/internal pull-up resistors</strong> for I2C in this prototype stage.<br>
+Given the <strong>short trace lengths</strong> and <strong>low-speed (100 kHz)</strong> bus, this approach is functionally stable for now.<br>
+However, <strong>external pull-ups are recommended for final PCB</strong> to ensure noise immunity and stronger drive capability.</p>
+</blockquote>
+<hr>
+<h3 id="%F0%9F%95%92-clock-configuration">🕒 Clock Configuration</h3>
+<ul>
+<li><strong>System Clock Source</strong>: Internal HSI (High-Speed Internal RC oscillator @ 64 MHz)</li>
+<li><strong>External Crystal</strong>: ❌ <strong>Omitted</strong></li>
+</ul>
+<blockquote>
+<p>Decision made to <strong>reduce component count</strong> and simplify PCB layout.<br>
+For this application (SPI at 8 MHz and I2C at 100 kHz), the <strong>internal RC oscillator provides sufficient timing accuracy</strong>.<br>
+If wireless timing drift or USB support is needed later, we can revise and add a crystal.</p>
+</blockquote>
+<hr>
+<h2 id="%F0%9F%93%B7-configuration-screenshots">📷 Configuration Screenshots</h2>
+<h3 id="stm32cubemx-spi-configuration-nrf24l01">STM32CubeMX: SPI Configuration (nRF24L01)</h3>
+<img src="spi.png" alt="SPI Configuration" width="1000"/>
+<hr>
+<h3 id="stm32cubemx-i2c-with-internal-pull-up-max30102">STM32CubeMX: I2C with Internal Pull-Up (MAX30102)</h3>
+<img src="Screenshot from 2025-07-23 20-16-57.png" alt="I2C Configuration" width="1000"/>
+<hr>
+<h1 id="%F0%9F%92%B0-bill-of-materials-bom">💰 Bill of Materials (BoM)</h1>
+<h3 id="estimated-hardware-cost-for-1-unit">Estimated Hardware Cost for 1 Unit</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Part Number</th>
+<th>Quantity</th>
+<th>Unit Price (USD)</th>
+<th>Total (USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCU</td>
+<td>STM32G030F6P6</td>
+<td>1</td>
+<td>$0.60</td>
+<td>$0.60</td>
+</tr>
+<tr>
+<td>Wireless Module</td>
+<td>nRF24L01+</td>
+<td>1</td>
+<td>$1.20</td>
+<td>$1.20</td>
+</tr>
+<tr>
+<td>Sensor</td>
+<td>MAX30102</td>
+<td>1</td>
+<td>$2.80</td>
+<td>$2.80</td>
+</tr>
+</tbody>
+</table>
+<p><strong>🧾 Total Estimated Cost (Prototype)</strong>: <strong>~$x.xx</strong></p>
+<hr>
+<h2 id="%F0%9F%94%9A-conclusion">🔚 Conclusion</h2>
+<p>This embedded setup is designed for <strong>wireless transmission of heart rate and temperature data</strong> using a cost-effective and low-power solution:</p>
+<ul>
+<li>STM32G030F6P runs at 64 MHz using its <strong>internal HSI</strong> oscillator</li>
+<li>Communicates wirelessly using <strong>nRF24L01+</strong> over SPI @ 8 MHz</li>
+<li>Collects health data via <strong>MAX30102</strong> over I2C with <strong>internal pull-ups</strong></li>
+</ul>
+<p>The design is optimized for:</p>
+<ul>
+<li>Low BOM cost</li>
+<li>Simple PCB layout (no external crystal or I2C resistors)</li>
+<li>Wireless + biometric sensing</li>
+</ul>
+<hr>
+<p><em>Report by: Amer Farg — Embedded Systems Engineer</em></p>
+
+</body>
+
+</html>

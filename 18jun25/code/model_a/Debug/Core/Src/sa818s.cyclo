@@ -1,0 +1,11 @@
+sa818s.c:35:26:SA818S_SendCommand	6
+sa818s.c:68:19:SA818S_Init	1
+sa818s.c:78:19:SA818S_Handshake	3
+sa818s.c:89:19:SA818S_SetGroup	9
+sa818s.c:108:6:SA818S_ApplyConfig	1
+sa818s.c:113:19:SA818S_SetVolume	5
+sa818s.c:130:19:SA818S_SetFilter	3
+sa818s.c:143:19:SA818S_SetTailTone	3
+sa818s.c:156:19:SA818S_ReadGroup	3
+sa818s.c:169:19:SA818S_ReadRSSI	3
+sa818s.c:181:19:SA818S_ReadVersion	3

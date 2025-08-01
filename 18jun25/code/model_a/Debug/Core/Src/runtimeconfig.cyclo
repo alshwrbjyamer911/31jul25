@@ -1,0 +1,3 @@
+runtimeconfig.c:3:6:getargs_sa818s	1
+runtimeconfig.c:23:6:getargs_ryrl898	1
+runtimeconfig.c:44:6:HAL_UART_RxCpltCallback	2

@@ -1,0 +1,10 @@
+01:14:55 **** Incremental Build of configuration Debug for project rcmodela ****
+make -j16 all 
+arm-none-eabi-size  rcmodela.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18264	     92	   2252	  20608	   5080	rcmodela.elf
+Finished building: default.size.stdout
+ 
+
+01:14:55 Build Finished. 0 errors, 0 warnings. (took 77ms)
+

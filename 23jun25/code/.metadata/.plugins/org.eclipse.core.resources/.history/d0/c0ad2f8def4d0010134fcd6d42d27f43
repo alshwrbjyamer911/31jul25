@@ -1,0 +1,18 @@
+#ifndef LORA_INIT
+#define LORA_INIT
+#include "main.h"
+
+uint8_t const band[]="AT+BAND=868000000\r\n";
+uint8_t const password[]="AT+CPIN=LoRaSecure1234\r\n";
+uint8_t const nodata[]=NULL;
+
+
+void lora_init();
+void lora_send(uint8_t *pdata);
+void lora_recive();
+
+
+
+
+
+#endif

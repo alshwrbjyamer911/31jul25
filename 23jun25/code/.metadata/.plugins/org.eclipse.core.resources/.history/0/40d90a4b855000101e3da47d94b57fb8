@@ -1,0 +1,74 @@
+#include "lora.hpp"
+#include <cstring>
+#include <cstdio>
+//UART_HandleTypeDef huart2;
+uint8_t uart_rx_buffer[100];
+void lora_init(){
+	receiver_id = get_id();
+	receiver_addr = get_address();
+
+	HAL_UART_Transmit(&huart2, band, sizeof(band)-1, 100);
+	HAL_UART_Transmit(&huart2, password, sizeof(password)-1, 100);
+
+}
+void lora_sendinit(uint8_t *pdata){
+	HAL_UART_Transmit(&huart2, pdata, sizeof(pdata)-1, 100);
+}
+
+uint8_t lora_recive(){
+	//+RCV=<Address>,<Length>,<Data>,<RSSI>,<SNR>
+	return receive_message();
+}
+
+uint8_t receive_message(){
+	memset(uart_rx_buffer,0,100);
+	uint8_t cmd;
+	HAL_UART_Receive(&huart2, uart_rx_buffer, 100, 100);
+
+	if(strstr((const char*)uart_rx_buffer,"+RCV=")){
+		cmd =process_message((const char*)uart_rx_buffer);
+	}
+
+	return cmd;
+}
+uint8_t process_message(const char *message){
+	int address = 0;int rssi = 0;int lenth=0;
+	uint8_t data=0;
+	sscanf(message, "+RCV=%d,%d,%c,%d,%d",&address,&lenth,&data,&rssi,NULL);
+	return data;
+}
+void lora_send_char(uint8_t data){
+	uint8_t buffer[50]=0;
+	memset(buffer,0,50);
+	sprintf(buffer,"AT+SEND=%d,1,%c\r\n",receiver_addr,data);
+	HAL_UART_Transmit(&huart2, buffer, strlen((char*)buffer), 100);
+
+}
+
+uint8_t get_id(){
+	uint8_t buffer[25]=0;
+
+	HAL_UART_Transmit(&huart2, getid, sizeof(getid), 100);
+//	HAL_Delay(10);
+	HAL_UART_Receive(&huart2, buffer, sizeof(buffer), 100);
+	sscanf(buffer,"+NETWORKID=%d", &my_id);
+	if(IAM ==1)
+		return my_id+1;
+	else if(IAM==0)
+		return my_id-1;
+
+}
+uint8_t get_address(){
+	uint8_t buffer[25]=0;
+	HAL_UART_Transmit(&huart2, getadd, sizeof(getadd), 100);
+//	HAL_Delay(10);
+	HAL_UART_Receive(&huart2, buffer, sizeof(buffer), 100);
+	sscanf(buffer,"+ADDRESS=%d",&my_addr);
+
+	if(IAM ==1)
+		return my_addr+1;
+	else if(IAM==0)
+		return my_addr-1;
+
+}
+

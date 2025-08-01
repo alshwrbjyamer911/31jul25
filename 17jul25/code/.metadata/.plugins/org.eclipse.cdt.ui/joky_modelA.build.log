@@ -1,0 +1,10 @@
+18:45:16 **** Incremental Build of configuration Debug for project joky_modelA ****
+make -j16 all 
+arm-none-eabi-size   joky_modelA.elf 
+   text	   data	    bss	    dec	    hex	filename
+  24088	    560	   2408	  27056	   69b0	joky_modelA.elf
+Finished building: default.size.stdout
+ 
+
+18:45:17 Build Finished. 0 errors, 0 warnings. (took 341ms)
+

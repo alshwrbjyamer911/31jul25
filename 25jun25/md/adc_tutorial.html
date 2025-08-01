@@ -1,0 +1,426 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STM32F4 ADC Tutorial with HAL Library</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c2c2c;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #ff6f61;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #ff6f61;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #ff6f61;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h2, h3 {
+            color: #ff6f61;
+        }
+        pre {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+            color: #e0e0e0;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .highlight {
+            color: #ff6f61;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #2c2c2c;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            border-top: 2px solid #ff6f61;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>STM32F4 ADC Tutorial with HAL Library</h1>
+    </header>
+    <nav>
+        <a href="#introduction">Introduction</a>
+        <a href="#adc_basics">ADC Basics</a>
+        <a href="#hal_adc">HAL ADC APIs</a>
+        <a href="#example">Example Code</a>
+        <a href="#configuration">Configuration Steps</a>
+        <a href="#tips">Tips and Best Practices</a>
+    </nav>
+    <div class="container">
+        <div class="section" id="introduction">
+            <h2>Introduction</h2>
+            <p>This tutorial provides a detailed guide on using the Analog-to-Digital Converter (ADC) on the STM32F4 series microcontrollers with the STM32 HAL library. The STM32F4 series, based on the ARM Cortex-M4, features powerful ADCs capable of converting analog signals to digital with high precision. This tutorial covers ADC basics, HAL library functions with their prototypes, and a complete example to help embedded software engineers configure and use the ADC effectively.</p>
+        </div>
+        <div class="section" id="adc_basics">
+            <h2>ADC Basics on STM32F4</h2>
+            <p>The STM32F4 series includes multiple ADC modules (typically ADC1, ADC2, ADC3) with the following key features:</p>
+            <ul>
+                <li><span class="highlight">Resolution</span>: 12-bit (configurable to 10-bit, 8-bit, or 6-bit)</li>
+                <li><span class="highlight">Channels</span>: Up to 16 external channels, plus internal temperature sensor and V<sub>ref</sub></li>
+                <li><span class="highlight">Modes</span>: Single, continuous, scan, and discontinuous modes</li>
+                <li><span class="highlight">Conversion Trigger</span>: Software, timer, or external event</li>
+                <li><span class="highlight">DMA Support</span>: For efficient data transfer</li>
+                <li><span class="highlight">Sampling Time</span>: Configurable to balance speed and accuracy</li>
+            </ul>
+            <p>The ADC converts an analog voltage (0 to V<sub>ref</sub>, typically 3.3V) into a digital value using the formula:</p>
+            <pre><code>Digital Value = (Analog Voltage / V<sub>ref</sub>) * (2<sup>Resolution</sup> - 1)</code></pre>
+            <p>For a 12-bit ADC with V<sub>ref</sub> = 3.3V, a 1.65V input yields approximately 2048 (half of 4095).</p>
+        </div>
+        <div class="section" id="hal_adc">
+            <h2>HAL ADC APIs</h2>
+            <p>The STM32 HAL library provides a comprehensive set of functions to configure and control the ADC. Below are the most commonly used HAL ADC APIs with their full function prototypes, arguments, and return types.</p>
+            <h3>Initialization and Configuration</h3>
+            <ul>
+                <li>
+                    <span class="highlight">HAL_ADC_Init</span>: Initializes the ADC with the specified configuration.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure containing configuration information.</li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation (<code>HAL_OK</code>, <code>HAL_ERROR</code>, <code>HAL_BUSY</code>, <code>HAL_TIMEOUT</code>).</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_ConfigChannel</span>: Configures a specific ADC channel, including rank and sampling time.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef* hadc, ADC_ChannelConfTypeDef* sConfig)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>:
+                            <ul>
+                                <li><code>hadc</code> - Pointer to ADC handle structure.</li>
+                                <li><code>sConfig</code> - Pointer to channel configuration structure (e.g., channel number, rank, sampling time).</li>
+                            </ul>
+                        </li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADCEx_MultiModeConfigChannel</span>: Configures multi-ADC mode (e.g., dual or triple mode).
+                    <pre><code>HAL_StatusTypeDef HAL_ADCEx_MultiModeConfigChannel(ADC_HandleTypeDef* hadc, ADC_MultiModeTypeDef* multimode)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>:
+                            <ul>
+                                <li><code>hadc</code> - Pointer to ADC handle structure.</li>
+                                <li><code>multimode</code> - Pointer to multi-mode configuration structure (e.g., mode, DMA access).</li>
+                            </ul>
+                        </li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Starting and Stopping Conversion</h3>
+            <ul>
+                <li>
+                    <span class="highlight">HAL_ADC_Start</span>: Starts ADC conversion in polling mode.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Start(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_Start_IT</span>: Starts ADC conversion in interrupt mode.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_Start_DMA</span>: Starts ADC conversion with DMA transfer.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef* hadc, uint32_t* pData, uint32_t Length)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>:
+                            <ul>
+                                <li><code>hadc</code> - Pointer to ADC handle structure.</li>
+                                <li><code>pData</code> - Pointer to the destination buffer for ADC data.</li>
+                                <li><code>Length</code> - Number of data items to transfer.</li>
+                            </ul>
+                        </li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_Stop</span>: Stops ADC conversion in polling mode.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Stop(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_Stop_IT</span>: Stops ADC conversion in interrupt mode.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Stop_IT(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_Stop_DMA</span>: Stops ADC conversion with DMA.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_Stop_DMA(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Data Retrieval</h3>
+            <ul>
+                <li>
+                    <span class="highlight">HAL_ADC_GetValue</span>: Retrieves the converted ADC value in polling mode.
+                    <pre><code>uint32_t HAL_ADC_GetValue(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: <code>uint32_t</code> - The converted ADC value.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_PollForConversion</span>: Polls for conversion completion within a timeout period.
+                    <pre><code>HAL_StatusTypeDef HAL_ADC_PollForConversion(ADC_HandleTypeDef* hadc, uint32_t Timeout)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>:
+                            <ul>
+                                <li><code>hadc</code> - Pointer to ADC handle structure.</li>
+                                <li><code>Timeout</code> - Timeout duration in milliseconds.</li>
+                            </ul>
+                        </li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Callback Functions</h3>
+            <ul>
+                <li>
+                    <span class="highlight">HAL_ADC_ConvCpltCallback</span>: Called when conversion is complete (interrupt mode).
+                    <pre><code>void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: None (void).</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_ConvHalfCpltCallback</span>: Called when half of the DMA buffer is filled.
+                    <pre><code>void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: None (void).</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="highlight">HAL_ADC_ErrorCallback</span>: Called when an ADC error occurs.
+                    <pre><code>void HAL_ADC_ErrorCallback(ADC_HandleTypeDef* hadc)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>: <code>hadc</code> - Pointer to ADC handle structure.</li>
+                        <li><b>Return</b>: None (void).</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Calibration</h3>
+            <ul>
+                <li>
+                    <span class="highlight">HAL_ADCEx_Calibration_Start</span>: Starts ADC calibration to improve accuracy.
+                    <pre><code>HAL_StatusTypeDef HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef* hadc, uint32_t SingleDiff)</code></pre>
+                    <ul>
+                        <li><b>Arguments</b>:
+                            <ul>
+                                <li><code>hadc</code> - Pointer to ADC handle structure.</li>
+                                <li><code>SingleDiff</code> - Calibration mode (e.g., <code>ADC_SINGLE_ENDED</code> or <code>ADC_DIFFERENTIAL_ENDED</code>).</li>
+                            </ul>
+                        </li>
+                        <li><b>Return</b>: <code>HAL_StatusTypeDef</code> - Status of the operation.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Each function returns a <code>HAL_StatusTypeDef</code> to indicate success (<code>HAL_OK</code>) or failure (<code>HAL_ERROR</code>, <code>HAL_BUSY</code>, <code>HAL_TIMEOUT</code>), except for callback functions and <code>HAL_ADC_GetValue</code>, which have specific return types.</p>
+        </div>
+        <div class="section" id="example">
+            <h2>Example Code</h2>
+            <p>Below is a complete example of configuring ADC1 to read an analog input from channel 0 (PA0) in polling mode. The code assumes you are using STM32CubeMX-generated code as a base.</p>
+            <pre><code>#include "main.h"
+
+ADC_HandleTypeDef hadc1;
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_ADC1_Init(void);
+
+int main(void) {
+    HAL_Init();
+    SystemClock_Config();
+    MX_GPIO_Init();
+    MX_ADC1_Init();
+
+    uint32_t adc_value = 0;
+
+    while (1) {
+        HAL_ADC_Start(&hadc1);
+        HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+        adc_value = HAL_ADC_GetValue(&hadc1);
+        HAL_ADC_Stop(&hadc1);
+
+        // Convert ADC value to voltage (Vref = 3.3V, 12-bit resolution)
+        float voltage = (adc_value * 3.3f) / 4095.0f;
+
+        // Add your processing here (e.g., send to UART)
+        HAL_Delay(500); // Delay for 500ms
+    }
+}
+
+static void MX_ADC1_Init(void) {
+    ADC_ChannelConfTypeDef sConfig = {0};
+
+    hadc1.Instance = ADC1;
+    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+    hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+    hadc1.Init.ScanConvMode = DISABLE;
+    hadc1.Init.ContinuousConvMode = DISABLE;
+    hadc1.Init.DiscontinuousConvMode = DISABLE;
+    hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+    hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+    hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+    hadc1.Init.NbrOfConversion = 1;
+    hadc1.Init.DMAContinuousRequests = DISABLE;
+    hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+    if (HAL_ADC_Init(&hadc1) != HAL_OK) {
+        Error_Handler();
+    }
+
+    sConfig.Channel = ADC_CHANNEL_0;
+    sConfig.Rank = 1;
+    sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
+    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
+        Error_Handler();
+    }
+
+    // Perform ADC calibration
+    if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK) {
+        Error_Handler();
+    }
+}
+
+void SystemClock_Config(void) {
+    // Configure system clock (generated by STM32CubeMX)
+    // Add your clock configuration here
+}
+
+static void MX_GPIO_Init(void) {
+    // Configure GPIO pins (generated by STM32CubeMX)
+    // Ensure PA0 is set as analog input
+}
+</code></pre>
+        </div>
+        <div class="section" id="configuration">
+            <h2>Configuration Steps</h2>
+            <p>Follow these steps to configure the ADC using STM32CubeMX and HAL:</p>
+            <ol>
+                <li><span class="highlight">Enable ADC</span>: In STM32CubeMX, select ADC1 (or desired ADC) and enable it in analog mode for the desired pin (e.g., PA0 for channel 0).</li>
+                <li><span class="highlight">Configure ADC Parameters</span>:
+                    <ul>
+                        <li>Clock Prescaler: Set to divide the ADC clock (e.g., <code>ADC_CLOCK_SYNC_PCLK_DIV4</code>).</li>
+                        <li>Resolution: Choose 12-bit for maximum precision.</li>
+                        <li>Conversion Mode: Select single or continuous mode.</li>
+                        <li>Trigger: Set to software start for manual control.</li>
+                        <li>Sampling Time: Choose a value (e.g., 480 cycles) to ensure accurate sampling.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight">Generate Code</span>: Use STM32CubeMX to generate the initialization code.</li>
+                <li><span class="highlight">Calibrate ADC</span>: Call <code>HAL_ADCEx_Calibration_Start</code> before starting conversions.</li>
+                <li><span class="highlight">Start Conversion</span>: Use <code>HAL_ADC_Start</code> (polling), <code>HAL_ADC_Start_IT</code> (interrupt), or <code>HAL_ADC_Start_DMA</code> (DMA).</li>
+                <li><span class="highlight">Read Data</span>: Use <code>HAL_ADC_GetValue</code> (polling) or process data in callbacks (interrupt/DMA).</li>
+            </ol>
+        </div>
+        <div class="section" id="tips">
+            <h2>Tips and Best Practices</h2>
+            <ul>
+                <li><span class="highlight">Calibration</span>: Always calibrate the ADC to minimize offset errors.</li>
+                <li><span class="highlight">Sampling Time</span>: Increase sampling time for high-impedance sources to ensure accurate conversions.</li>
+                <li><span class="highlight">DMA</span>: Use DMA for continuous or multi-channel conversions to reduce CPU load.</li>
+                <li><span class="highlight">Interrupt Mode</span>: Prefer interrupts over polling for real-time applications.</li>
+                <li><span class="highlight">Vref</span>: Ensure a stable reference voltage (e.g., 3.3V) for accurate conversions.</li>
+                <li><span class="highlight">Error Handling</span>: Check return values of HAL functions and implement error handling.</li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 STM32 ADC Tutorial. All rights reserved Amer Farg.</p>
+    </footer>
+</body>
+</html>

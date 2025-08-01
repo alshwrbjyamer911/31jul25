@@ -1,0 +1,7 @@
+main.cpp:70:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	2
+main.cpp:83:5:int main()	1
+main.cpp:131:6:void SystemClock_Config()	3
+main.cpp:173:13:void MX_TIM2_Init()	4
+main.cpp:218:13:void MX_USART2_UART_Init()	2
+main.cpp:251:13:void MX_GPIO_Init()	1
+main.cpp:271:6:void Error_Handler()	1

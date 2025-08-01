@@ -1,0 +1,11 @@
+../Core/Src/SSD1309.c:99:6:SSD1309_WriteCommand	16	static
+../Core/Src/SSD1309.c:110:6:SSD1309_WriteData	16	static
+../Core/Src/SSD1309.c:121:6:SSD1309_Reset	8	static
+../Core/Src/SSD1309.c:128:6:InitDisplay	16	static
+../Core/Src/SSD1309.c:139:6:SSD1309_UpdateScreen	16	static
+../Core/Src/SSD1309.c:152:6:SSD1309_Fill	24	static
+../Core/Src/SSD1309.c:158:6:SSD1309_DrawPixel	16	static
+../Core/Src/SSD1309.c:168:6:SSD1309_DrawRectangle	32	static
+../Core/Src/SSD1309.c:185:6:tempwrite	16	static
+../Core/Src/SSD1309.c:197:6:ClearScreen	1040	static
+../Core/Src/SSD1309.c:213:6:WriteText	24	static

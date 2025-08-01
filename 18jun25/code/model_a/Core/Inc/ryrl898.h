@@ -1,0 +1,58 @@
+#ifndef RYLR898_LORA_INIT_H
+#define RYLR898_LORA_INIT_H
+
+#include "main.h"
+#include <stdint.h>
+#include <stdlib.h>
+// Role definitions
+#define LORA_ROLE_TRANSMITTER 1
+#define LORA_ROLE_RECEIVER    0
+#define IAM LORA_ROLE_RECEIVER
+
+extern UART_HandleTypeDef huart6;
+extern UART_HandleTypeDef huart2;
+
+// AT Commands
+static const uint8_t LORA_AT_BAND[] = "AT+BAND=868000000\r\n";
+static const uint8_t LORA_AT_PWD[] = "AT+CPIN=LoRaSecure1234\r\n";
+static const uint8_t LORA_AT_GETID[] = "AT+NETWORKID\r\n";
+static const uint8_t LORA_AT_GETADDR[] = "AT+ADDRESS\r\n";
+
+extern uint8_t uart6passwotd[14];
+
+// Fixed LoRa configuration structure
+typedef struct {
+    uint16_t id;                // Fixed: single integer
+    uint16_t addr;              // Fixed: single integer
+    uint16_t receiver_id;
+    uint16_t receiver_addr;
+    char band[10];              // Text as string (9 + null terminator)
+    char password[15];          // Text password (14 + null terminator)
+} LoRaConfig_t;
+
+extern LoRaConfig_t lora_config;
+extern uint8_t uart_rx_buffer[100];
+
+// Initialization
+void lora_init(void);
+uint16_t get_id(void);
+uint16_t get_address(void);
+
+// Configuration
+void lora_set_address(uint16_t addr);
+void lora_set_network_id(uint16_t netid);
+void lora_set_band(const char *freq);
+void lora_set_password(const char *pwd);
+void lora_apply_config(void);
+
+// Send/Receive
+void lora_send_char(uint8_t data);
+void lora_send_data(uint8_t *pdata, uint16_t len);
+uint8_t lora_receive_char(void);
+uint8_t lora_receive_line(char *buffer, uint16_t max_len);
+uint8_t receive_message();
+// Parsing & Utility
+uint8_t process_message(const char *message);
+
+
+#endif  // RYLR898_LORA_INIT_H

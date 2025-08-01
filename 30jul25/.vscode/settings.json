@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "oled_sh1106.h": "c",
+        "oled_font.h": "c",
+        "stdint.h": "c",
+        "string.h": "c"
+    }
+}

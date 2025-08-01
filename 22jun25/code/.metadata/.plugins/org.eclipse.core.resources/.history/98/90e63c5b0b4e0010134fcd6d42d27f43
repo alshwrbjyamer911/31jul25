@@ -1,0 +1,37 @@
+#include "lora.hpp"
+#include <cstring>
+
+UART_HandleTypeDef huart2;
+void lora_init(){
+
+	HAL_UART_Transmit(&huart2, baud, sizeof(baud)-1, 100);
+	HAL_UART_Transmit(&huart2, password, sizeof(password)-1, 100);
+
+}
+void lora_send(uint8_t *pdata){
+	HAL_UART_Transmit(&huart2, pdata, sizeof(pdata)-1, 100);
+}
+
+char lora_recive(){
+	//+RCV=<Address>,<Length>,<Data>,<RSSI>,<SNR>
+	return receive_message();
+}
+
+char receive_message(){
+	memset(uart_rx_buffer,0,100);
+	char cmd;
+	HAL_UART_Receive(&huart2, uart_rx_buffer, 100, 100);
+
+	if(strstr(uart_rx_buffer,"+RCV=")){
+		cmd =process_message(uart_rx_buffer);
+	}
+
+	return cmd;
+}
+char process_message(const char *message){
+	int address = 0;int rssi = 0;int lenth=0;
+	char data=0;
+	sscanf(massage, "+RCV=%d,%d,%[^,],%d,%d",&address,&lenth,&data,&rssi,NULL);
+	return data;
+}
+

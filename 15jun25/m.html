@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Embedded Voice & LoRa Project Timeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f9f9fb;
+      color: #333;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .info-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .info-box h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #007acc;
+    }
+
+    .info-box ul {
+      padding-left: 20px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .week {
+      background: #fff;
+      padding: 20px;
+      border-left: 5px solid #007acc;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .week h3 {
+      margin-top: 0;
+      color: #007acc;
+    }
+
+    .week ul {
+      padding-left: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .week {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📡 Embedded Voice & LoRa Project Timeline</h1>
+    <p><strong>5 Weeks Roadmap — ALEBEL Electronics</strong></p>
+  </header>
+
+  <section class="info-box">
+    <h2>🧾 Project Info</h2>
+    <p><strong>System:</strong> Robot Jockey (Model A)</p>
+    <p><strong>MCU:</strong> STM32F405RGT6</p>
+    <p><strong>Modules:</strong></p>
+    <ul>
+      <li>📡 <strong>LoRa:</strong> RYLR898</li>
+      <li>🎤 <strong>Voice:</strong> SA818SU</li>
+    </ul>
+    <p><strong>Role:</strong> Embedded Software Team Leader</p>
+    <p><strong>Goal:</strong> Send <strong>commands via LoRa</strong> and <strong>voice via SA818SU</strong></p>
+  </section>
+
+  <section class="timeline">
+    <div class="week">
+      <h3>📅 Week 1 - Setup</h3>
+      <ul>
+        <li>Review datasheets (LoRa & SA818)</li>
+        <li>MCU peripheral configuration plan</li>
+        <li>Initial UART communication test</li>
+      </ul>
+    </div>
+
+    <div class="week">
+      <h3>⚙️ Week 2 - LoRa Communication</h3>
+      <ul>
+        <li>Implement UART driver for LoRa</li>
+        <li>AT command parser</li>
+        <li>Test long-range transmission</li>
+      </ul>
+    </div>
+
+    <div class="week">
+      <h3>🎤 Week 3 - Voice Module Integration</h3>
+      <ul>
+        <li>Configure SA818 audio IO</li>
+        <li>Implement push-to-talk control</li>
+        <li>Field audio tests</li>
+      </ul>
+    </div>
+
+    <div class="week">
+      <h3>🔄 Week 4 - Combined System Test</h3>
+      <ul>
+        <li>Sync LoRa + voice control logic</li>
+        <li>Optimize power usage</li>
+        <li>Debug edge cases</li>
+      </ul>
+    </div>
+
+    <div class="week">
+      <h3>🚀 Week 5 - Final Validation</h3>
+      <ul>
+        <li>Full-distance LoRa + voice test</li>
+        <li>Documentation and demo</li>
+        <li>Team review and delivery</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="footer">
+    &copy; 2025 ALEBEL Electronics — Embedded Systems Division
+  </div>
+
+</body>
+</html>

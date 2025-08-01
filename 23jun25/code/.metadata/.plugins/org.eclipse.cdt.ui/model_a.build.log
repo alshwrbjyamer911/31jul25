@@ -1,0 +1,17 @@
+02:22:34 **** Incremental Build of configuration Debug for project model_a ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "model_a.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/amer/Work/Elebel/18jun25/code/model_a/STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="model_a.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: model_a.elf
+ 
+arm-none-eabi-size   model_a.elf 
+arm-none-eabi-objdump -h -S  model_a.elf  > "model_a.list"
+   text	   data	    bss	    dec	    hex	filename
+  18184	    120	   2048	  20352	   4f80	model_a.elf
+Finished building: default.size.stdout
+ 
+Finished building: model_a.list
+ 
+
+02:22:35 Build Finished. 0 errors, 0 warnings. (took 790ms)
+

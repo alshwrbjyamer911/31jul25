@@ -1,0 +1,8 @@
+../Core/Src/lora.cpp:13:6:void lora_init()	8	static
+../Core/Src/lora.cpp:22:6:void lora_sendinit(uint8_t*)	16	static
+../Core/Src/lora.cpp:26:9:uint8_t lora_recive()	8	static
+../Core/Src/lora.cpp:31:9:uint8_t receive_message()	16	static
+../Core/Src/lora.cpp:42:9:uint8_t process_message(const char*)	48	static
+../Core/Src/lora.cpp:48:6:void lora_send_char(uint8_t)	72	static
+../Core/Src/lora.cpp:56:9:uint8_t get_id()	40	static
+../Core/Src/lora.cpp:69:9:uint8_t get_address()	40	static

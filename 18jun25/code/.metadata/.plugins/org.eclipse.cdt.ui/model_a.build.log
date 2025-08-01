@@ -1,0 +1,32 @@
+12:02:51 **** Incremental Build of configuration Debug for project model_a ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/sa818s.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/sa818s.d" -MT"Core/Src/sa818s.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/sa818s.o"
+../Core/Src/sa818s.c: In function 'SA818S_SetGroup':
+../Core/Src/sa818s.c:99:18: warning: passing argument 2 of 'sprintf' makes pointer from integer without a cast [-Wint-conversion]
+   99 |     sprintf(cmd, sizeof(cmd), "AT+DMOSETGROUP=%u,%.4f,%.4f,%04u,%u,%04u\r\n",bandwidth, tx_freq, rx_freq, tx_ctcss, squelch, rx_ctcss);
+      |                  ^~~~~~~~~~~
+      |                  |
+      |                  unsigned int
+In file included from ../Core/Inc/sa818s.h:6,
+                 from ../Core/Src/sa818s.c:1:
+/app/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.200.202301161003/tools/arm-none-eabi/include/stdio.h:244:32: note: expected 'const char * restrict' but argument is of type 'unsigned int'
+  244 | int sprintf (char *__restrict, const char *__restrict, ...)
+      |                                ^
+../Core/Src/sa818s.c: In function 'SA818S_Init':
+../Core/Src/sa818s.c:75:1: warning: control reaches end of non-void function [-Wreturn-type]
+   75 | }
+      | ^
+arm-none-eabi-g++ -o "model_a.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/amer/Work/Elebel/18jun25/code/model_a/STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="model_a.map" -Wl,--gc-sections -static -u _scanf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: model_a.elf
+ 
+arm-none-eabi-size   model_a.elf 
+arm-none-eabi-objdump -h -S  model_a.elf  > "model_a.list"
+   text	   data	    bss	    dec	    hex	filename
+  31524	    488	   2096	  34108	   853c	model_a.elf
+Finished building: default.size.stdout
+ 
+Finished building: model_a.list
+ 
+
+12:02:52 Build Finished. 0 errors, 2 warnings. (took 890ms)
+

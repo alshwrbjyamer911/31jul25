@@ -1,0 +1,8 @@
+lora.cpp:13:6:void lora_init()	1
+lora.cpp:22:6:void lora_sendinit(uint8_t*)	1
+lora.cpp:26:9:uint8_t lora_recive()	1
+lora.cpp:31:9:uint8_t receive_message()	2
+lora.cpp:42:9:uint8_t process_message(const char*)	1
+lora.cpp:48:6:void lora_send_char(uint8_t)	1
+lora.cpp:56:9:uint8_t get_id()	1
+lora.cpp:69:9:uint8_t get_address()	1

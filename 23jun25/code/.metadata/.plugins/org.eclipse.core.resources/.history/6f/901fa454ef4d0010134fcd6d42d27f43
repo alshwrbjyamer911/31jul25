@@ -1,0 +1,10 @@
+#ifndef LORA_INIT
+#define LORA_INIT
+#include "uart.h"
+
+
+void init_lora();
+
+
+
+#endif

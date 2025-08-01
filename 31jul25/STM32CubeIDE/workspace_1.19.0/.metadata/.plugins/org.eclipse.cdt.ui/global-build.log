@@ -1,0 +1,28 @@
+20:38:57 **** Incremental Build of configuration Debug for project rcmodela ****
+make -j16 all 
+arm-none-eabi-size  rcmodela.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18264	     92	   2252	  20608	   5080	rcmodela.elf
+Finished building: default.size.stdout
+ 
+01:14:54 **** Build of configuration Debug for project V1_TEST ****
+make -j16 all 
+arm-none-eabi-size  V1_TEST.elf 
+   text	   data	    bss	    dec	    hex	filename
+   7532	     16	   2688	  10236	   27fc	V1_TEST.elf
+Finished building: default.size.stdout
+ 
+01:14:55 **** Incremental Build of configuration Debug for project rcmodela ****
+make -j16 all 
+arm-none-eabi-size  rcmodela.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18264	     92	   2252	  20608	   5080	rcmodela.elf
+Finished building: default.size.stdout
+ 
+01:14:55 **** Build of configuration Debug for project test_jokyonmystm ****
+make -j16 all 
+arm-none-eabi-size  test_jokyonmystm.elf 
+   text	   data	    bss	    dec	    hex	filename
+  12480	     12	   1716	  14208	   3780	test_jokyonmystm.elf
+Finished building: default.size.stdout
+ 

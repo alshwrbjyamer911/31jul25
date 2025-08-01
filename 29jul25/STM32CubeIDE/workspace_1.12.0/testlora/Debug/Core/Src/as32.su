@@ -1,0 +1,8 @@
+../Core/Src/as32.c:26:9:lora_init	8	static
+../Core/Src/as32.c:59:9:lora_send_config	16	static
+../Core/Src/as32.c:66:9:lora_store_config	16	static
+../Core/Src/as32.c:74:9:lora_send_enc_key	8	static
+../Core/Src/as32.c:80:6:lora_config	16	static
+../Core/Src/as32.c:87:9:lora_send_data	24	static
+../Core/Src/as32.c:99:9:lora_wait_ok	16	static
+../Core/Src/as32.c:115:9:lora_read_params	8	static

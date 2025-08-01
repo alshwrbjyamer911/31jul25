@@ -1,0 +1,44 @@
+2025-07-18 00:08:04,667 [INFO] WebApp:194 - Connection lost
+2025-07-18 13:58:55,180 [INFO] WebApp:191 - Connection restablished
+2025-07-18 13:58:58,049 [INFO] WebApp:194 - Connection lost
+2025-07-18 13:58:58,454 [INFO] WebApp:191 - Connection restablished
+2025-07-18 19:22:26,819 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 355315392 Bytes (964689920)
+2025-07-18 19:22:27,585 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 428916448 Bytes (964689920)
+2025-07-18 19:22:28,350 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: TIM1_8
+2025-07-18 19:22:28,351 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ADC
+2025-07-18 19:22:28,352 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SYS
+2025-07-18 19:22:28,352 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ADC
+2025-07-18 19:22:28,352 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: RCC
+2025-07-18 19:22:28,352 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: NVIC
+2025-07-18 19:22:28,353 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-07-18 19:22:28,353 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-07-18 19:22:28,353 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: UART
+2025-07-18 19:22:28,354 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: GPIO
+2025-07-18 19:22:28,355 [INFO] CodeGenerator:892 - code generatio: config db path: /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.common.mx_6.15.0.202507011659//db/
+2025-07-18 19:22:28,974 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/MXTmpFiles/license.tmp_save
+2025-07-18 19:22:29,187 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/MXTmpFiles/license.tmp
+2025-07-18 19:22:29,218 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/MXTmpFiles/gpio.tmp_save
+2025-07-18 19:22:29,363 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/MXTmpFiles/gpio.tmp
+2025-07-18 19:22:29,596 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Src/stm32f4xx_it.c_save
+2025-07-18 19:22:29,885 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Src/stm32f4xx_it.c
+2025-07-18 19:22:29,888 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Inc/stm32f4xx_it.h_save
+2025-07-18 19:22:29,983 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Inc/stm32f4xx_it.h
+2025-07-18 19:22:29,993 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Src/stm32f4xx_hal_msp.c_save
+2025-07-18 19:22:30,239 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Src/stm32f4xx_hal_msp.c
+2025-07-18 19:22:30,241 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/MXTmpFiles/system.tmp_save
+2025-07-18 19:22:30,335 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/MXTmpFiles/system.tmp
+2025-07-18 19:22:30,341 [INFO] CodeEngine:321 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Inc/stm32f4xx_hal_conf.h_save
+2025-07-18 19:22:30,474 [INFO] CodeEngine:345 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Inc/stm32f4xx_hal_conf.h
+2025-07-18 19:22:30,505 [INFO] ApiDbMcu:532 - Load IP Config File for USART6
+2025-07-18 19:22:30,508 [WARN] IPConfigManager:3811 - IP not found : TIM
+2025-07-18 19:22:30,508 [WARN] CodeGenerator:4259 - IP not found : null
+2025-07-18 19:22:30,511 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Inc/main.h_save
+2025-07-18 19:22:30,691 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Inc/main.h
+2025-07-18 19:22:30,692 [INFO] CodeEngine:265 - oldGeneratedFile, /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Src/main.c_save
+2025-07-18 19:22:30,882 [INFO] CodeEngine:289 - Generated code: /home/amer/Work/Elebel/17jul25/code/joky_modelA/Core/Src/main.c
+2025-07-18 19:22:32,318 [INFO] ProjectBuilder:3606 - Time for Copy HAL[1] : 55mS.
+2025-07-18 19:22:32,322 [INFO] ProjectBuilder:5216 - Project Generator version: 4.7.0-B52
+2025-07-18 19:22:32,411 [INFO] ConfigFileManager:1595 - The Die is : DIE413
+2025-07-18 19:22:33,431 [INFO] ProjectBuilder:5496 - Time for Generating toolchain IDE Files: 1109mS.
+2025-07-18 19:22:33,431 [INFO] ProjectBuilder:3463 - Time for Copy CMSIS : 0mS.
+2025-07-18 19:22:33,432 [INFO] ProjectBuilder:3463 - Time for Copy CMSIS : 0mS.

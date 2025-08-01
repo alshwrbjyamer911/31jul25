@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AT notes.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* ==========================
+   ELEBEL Markdown Style by Amer Farg
+   ========================== */
+
+/* Base font and layout */
+html, body {
+  font-family: 'Segoe UI', 'Ubuntu', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #222;
+  background-color: #ffffff; /* 60% White */
+  padding: 20px 30px;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  color: #444; /* 30% Gray */
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3em;
+}
+
+h1 {
+  font-size: 1.8em;
+  border-color: #999;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1em;
+}
+
+/* Links */
+a {
+  color: #005f99;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Code blocks */
+pre, code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+pre {
+  background-color: #f0f0f0; /* Light gray: 30% */
+  padding: 16px;
+  border-left: 5px solid #999;
+  overflow-x: auto;
+  border-radius: 4px;
+  margin-bottom: 1.5em;
+}
+
+code {
+  background-color: #eeeeee;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 90%;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 1.5em 0;
+  padding: 0.8em 1.2em;
+  background: #f2f2f2; /* light gray */
+  border-left: 5px solid #888; /* darker gray */
+  font-style: italic;
+  color: #333;
+}
+
+/* Lists */
+ul, ol {
+  margin: 1em 0 1em 2em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+/* Horizontal rule */
+hr {
+  border: 0;
+  border-top: 1px solid #bbb;
+  margin: 2em 0;
+}
+
+/* Footer / Signature */
+footer {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+  color: #666;
+  font-size: 14px;
+  text-align: right;
+}
+
+/* Amer Signature */
+footer::after {
+  content: "Designed by Amer Farg • ELEBEL";
+  display: block;
+  margin-top: 0.5em;
+  font-style: italic;
+  color: #888;
+}
+
+/* Page break support */
+.page {
+  page-break-after: always;
+}
+</style>
+
+<link rel="stylesheet" href="file:///home/amer/Work/Elebel/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///home/amer/Work/Elebel/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <p><strong>Key Notes on LoRa AT Command Guide for RYLR406 and RYLR896 Modules</strong></p>
+<ol>
+<li>
+<p><strong>Module Compatibility</strong>:</p>
+<ul>
+<li>The guide applies to <strong>RYLR896</strong> LoRa modules, supporting network architectures like Point-to-Point, Point-to-Multipoint, or Multipoint-to-Multipoint.</li>
+</ul>
+</li>
+<li>
+<p><strong>Network Configuration</strong>:</p>
+<ul>
+<li><strong>NETWORKID</strong>: Modules must share the same NETWORKID (1–15 recommended) <strong>ZERO is not safe</strong> to communicate. Different NETWORKIDs prevent communication.</li>
+<li><strong>ADDRESS</strong>: Unique identifier for each module <strong>(0–65535)</strong>. Used to specify the transmitter or receiver.</li>
+</ul>
+</li>
+<li>
+<p><strong>AT Command Sequence</strong>:</p>
+<ul>
+<li><strong>AT+ADDRESS</strong>: Set module address (stored in EEPROM).</li>
+<li><strong>AT+NETWORKID</strong>: Set network ID (stored in EEPROM, <strong>avoid 0</strong> as it’s the public LoRa ID).</li>
+<li><strong>AT+BAND</strong>: Set RF frequency (e.g. 915 MHz for RYLR89x, <strong>not stored in EEPROM</strong>).</li>
+<li><strong>AT+PARAMETER</strong>: Configure RF parameters (Spreading Factor, Bandwidth, Coding Rate, Preamble Length, <strong>not</strong> stored in EEPROM):
+<ul>
+<li><strong>Spreading Factor (7–12)</strong>: Higher values improve sensitivity but increase transmission time.</li>
+<li><strong>Bandwidth (7.8–500 kHz)</strong>: Lower bandwidth improves sensitivity but extends transmission time.</li>
+<li><strong>Coding Rate (1–4)</strong>: 1 is fastest.</li>
+<li><strong>Preamble Length (4–7)</strong>: Higher values reduce data loss risk.</li>
+<li>Recommended settings:
+<ul>
+<li><strong>Within 3 km: <code>AT+PARAMETER=10,7,1,7</code></strong></li>
+<li>Beyond 3 km: <code>AT+PARAMETER=12,4,1,7</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>AT+SEND</strong>: Send data to a specific address (max <strong>240</strong> bytes, adds 8 bytes overhead).</li>
+</ul>
+</li>
+<li>
+<p><strong>Key AT Commands</strong>:</p>
+<ul>
+<li><strong>AT</strong>: Test module response (<code>+OK</code>).</li>
+<li><strong>AT+RESET</strong>: Software reset (<code>+RESET</code>, <code>+READY</code>).</li>
+<li><strong>AT+MODE</strong>: Set mode (0: Transmit/Receive, 1: Sleep, <strong>wakes</strong> on RX pin input).</li>
+<li><strong>AT+IPR</strong>: Set UART baud rate (300–115200, default 115200, <strong>stored in EEPROM</strong>).</li>
+<li><strong>AT+CPIN</strong>: Set 32-character AES128 password for network encryption.<strong>Not stored in EEPROM</strong></li>
+<li><strong>AT+CRFOP</strong>: Set RF output power (0–22 dBm, stored in EEPROM).</li>
+<li><strong>AT+VER?</strong>: Query firmware version.</li>
+<li><strong>AT+UID?</strong>: Query <em>12-byte</em> unique ID.</li>
+<li><strong>AT+FACTORY</strong>: Reset to defaults (e.g., BAND: 915 MHz, UART: 115200, Address: 0).</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Transmission</strong>:</p>
+<ul>
+<li><strong>AT+SEND=<Address>,<Payload Length>,<Data></strong>: Sends data to specified address. Address 0 broadcasts to all (0–65535).</li>
+<li><strong>+RCV</strong>: Displays received data with Address, Length, Data, RSSI, and SNR (e.g., <code>+RCV=50,5,HELLO,-99,40</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>Error Handling</strong>:</p>
+<ul>
+<li>Common errors include missing enter (<code>+ERR=1</code>), invalid command (<code>+ERR=4</code>), or payload exceeding 240 bytes (<code>+ERR=13</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>Important Notes</strong>:</p>
+<ul>
+<li>Add <code>\r\n</code> (enter) to all AT commands.</li>
+<li>Use <code>?</code> to query current settings (e.g., <code>AT+ADDRESS?</code>).</li>
+<li>Wait for <code>+OK</code> before sending the next command.</li>
+<li>Use the LoRa Modem Calculator Tool to estimate transmission time.</li>
+<li>Non-EEPROM settings (BAND, PARAMETER) must be reset after power cycle.</li>
+</ul>
+</li>
+<li>
+<p><strong>Manufacturer Contact</strong>:</p>
+<ul>
+<li>Email: alshwrbjyamer@gmail.com</li>
+<li>Website: ELEBEL Company</li>
+</ul>
+</li>
+</ol>
+
+</body>
+
+</html>

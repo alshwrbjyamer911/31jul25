@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>timeline.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///home/amer/Work/Elebel/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///home/amer/Work/Elebel/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="%F0%9F%93%A1-embedded-voice--lora-communication-project-timeline">📡 Embedded Voice &amp; LoRa Communication Project Timeline</h1>
+<p><strong>Role</strong>: Embedded Software Team Leader<br>
+<strong>Company</strong>: Elebel<br>
+<strong>Target MCU</strong>: STM32F405RGT6<br>
+<strong>Modules Used</strong>:</p>
+<ul>
+<li><strong>LoRa</strong>: RYLR898</li>
+<li><strong>Voice</strong>: SA818SU Audio Module</li>
+</ul>
+<p><strong>Goal</strong>:<br>
+Send <strong>commands via LoRa</strong> and <strong>voice via walkie-talkie module</strong> from one STM32F405 to another.</p>
+<hr>
+<h2 id="%F0%9F%95%92-work-schedule">🕒 Work Schedule</h2>
+<ul>
+<li><strong>Days/Week</strong>: 5</li>
+<li><strong>Hours/Day</strong>: 8</li>
+<li><strong>Total</strong>: 40 hours/week</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%94%A7-project-duration--phases">🔧 Project Duration &amp; Phases</h2>
+<p><strong>Estimated Duration</strong>: 6–7 Weeks</p>
+<hr>
+<h2 id="%E2%9C%85-week-1-%E2%80%93-project-planning--initial-setup">✅ Week 1 – Project Planning &amp; Initial Setup</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Requirements analysis and protocol planning.</li>
+<li>Study RYLR898 and SA818SU datasheets.</li>
+<li>Setup STM32 project using STM32CubeMX (HAL/LL drivers).</li>
+<li>Initialize UARTs for LoRa and Audio modules.</li>
+<li>Prepare development tools (e.g., serial terminal, logic analyzer, test audio).</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>STM32 environment ready.</li>
+<li>Basic UART communication established.</li>
+</ul>
+<hr>
+<h2 id="%E2%9C%85-week-2-%E2%80%93-lora-rylr898-communication">✅ Week 2 – LoRa (RYLR898) Communication</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Implement AT command-based UART communication with RYLR898.</li>
+<li>Establish two-way communication between two STM32 boards.</li>
+<li>Add error handling and acknowledgment protocol.</li>
+<li>Design simple command structure (JSON or byte packet).</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>Reliable LoRa command exchange working.</li>
+</ul>
+<hr>
+<h2 id="%E2%9C%85-week-3-%E2%80%93-sa818su-voice-module-integration">✅ Week 3 – SA818SU Voice Module Integration</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Understand and control TX/RX modes using GPIO.</li>
+<li>Connect headset/mic and test with another SA818SU.</li>
+<li>Implement GPIO-based PTT (push-to-talk) control.</li>
+<li>Verify audio transmission quality.</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>Full-duplex voice transmission working under STM32 control.</li>
+</ul>
+<hr>
+<h2 id="%E2%9C%85-week-4-%E2%80%93-command-protocol-implementation">✅ Week 4 – Command Protocol Implementation</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Design command structure (control, status, request types).</li>
+<li>Implement command parser and dispatcher on STM32.</li>
+<li>Add retries, CRC, and basic protocol features.</li>
+<li>Create abstraction layer for easier extension/testing.</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>Fully working structured command protocol.</li>
+</ul>
+<hr>
+<h2 id="%E2%9C%85-week-5-%E2%80%93-system-integration">✅ Week 5 – System Integration</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Combine LoRa and voice functionality.</li>
+<li>Implement task switching/state machine for both modules.</li>
+<li>Add indicators for system status (LEDs, serial debug).</li>
+<li>Ensure coordination between command and voice modes.</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>Integrated system with command + voice capabilities.</li>
+</ul>
+<hr>
+<h2 id="%E2%9C%85-week-6-%E2%80%93-testing-optimization-documentation">✅ Week 6 – Testing, Optimization, Documentation</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Field test communication range and quality.</li>
+<li>Add UART DMA or IRQ to optimize performance.</li>
+<li>Add fault recovery and watchdogs.</li>
+<li>Document code structure, usage, and test cases.</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>Fully validated and documented firmware.</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%9B%A0%EF%B8%8F-week-7-optional-%E2%80%93-future-proofing">🛠️ Week 7 (Optional) – Future-Proofing</h2>
+<p><strong>Tasks</strong>:</p>
+<ul>
+<li>Add command-line interface (CLI) for debugging.</li>
+<li>Add RTOS (FreeRTOS) for modular task handling.</li>
+<li>Add OTA or debug bootloader (if needed).</li>
+</ul>
+<p><strong>Deliverables</strong>:</p>
+<ul>
+<li>Production-ready system with advanced features.</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%93%8A-summary-table">📊 Summary Table</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Tasks</th>
+<th>Deliverables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Planning, setup, UART init</td>
+<td>Environment &amp; drivers ready</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LoRa module</td>
+<td>Basic LoRa comm</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Voice module</td>
+<td>SA818 voice works</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Protocol design</td>
+<td>Structured LoRa commands</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Integration</td>
+<td>LoRa + voice coordination</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Testing, docs</td>
+<td>Final testable product</td>
+</tr>
+<tr>
+<td>7</td>
+<td>(Optional) Additions</td>
+<td>CLI, RTOS, UI</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%F0%9F%93%8E-notes">📎 Notes</h2>
+<ul>
+<li>Use UART-based AT commands for RYLR898 and SA818SU.</li>
+<li>Use GPIOs for TX/RX (PTT) control for SA818SU.</li>
+<li>Start simple, then refactor and add abstraction/RTOS if time allows.</li>
+</ul>
+<hr>
+
+</body>
+
+</html>

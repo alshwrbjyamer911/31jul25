@@ -1,0 +1,41 @@
+2025-06-21 04:15:48,430 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 483586864 Bytes (605028352)
+2025-06-21 04:15:49,667 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 522334160 Bytes (605028352)
+2025-06-21 04:15:49,882 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 200345416 Bytes (605028352)
+2025-06-21 04:15:50,476 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: TIM1_8
+2025-06-21 04:15:50,477 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2025-06-21 04:15:50,477 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2025-06-21 04:15:50,477 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: USART
+2025-06-21 04:15:50,477 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2025-06-21 04:15:50,479 [INFO] CodeGenerator:793 - code generatio: config db path: /app/stm32cubeide/plugins/com.st.stm32cube.common.mx_6.8.0.202302231600//db/
+2025-06-21 04:15:50,824 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/MXTmpFiles/license.tmp_save
+2025-06-21 04:15:51,242 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/MXTmpFiles/license.tmp
+2025-06-21 04:15:51,325 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/MXTmpFiles/gpio.tmp_save
+2025-06-21 04:15:51,465 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/MXTmpFiles/gpio.tmp
+2025-06-21 04:15:51,578 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/Core/Src/stm32f4xx_it.c_save
+2025-06-21 04:15:51,738 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/Core/Src/stm32f4xx_it.c
+2025-06-21 04:15:51,740 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/Core/Inc/stm32f4xx_it.h_save
+2025-06-21 04:15:51,850 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/Core/Inc/stm32f4xx_it.h
+2025-06-21 04:15:51,865 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/Core/Src/stm32f4xx_hal_msp.c_save
+2025-06-21 04:15:52,031 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/Core/Src/stm32f4xx_hal_msp.c
+2025-06-21 04:15:52,033 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/MXTmpFiles/system.tmp_save
+2025-06-21 04:15:52,116 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/MXTmpFiles/system.tmp
+2025-06-21 04:15:52,121 [INFO] CodeEngine:311 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/Core/Inc/stm32f4xx_hal_conf.h_save
+2025-06-21 04:15:52,223 [INFO] CodeEngine:335 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/Core/Inc/stm32f4xx_hal_conf.h
+2025-06-21 04:15:52,263 [WARN] IPConfigManager:3431 - IP not found : TIM
+2025-06-21 04:15:52,264 [WARN] CodeGenerator:3754 - IP not found : null
+2025-06-21 04:15:52,266 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/Core/Inc/main.h_save
+2025-06-21 04:15:52,379 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/Core/Inc/main.h
+2025-06-21 04:15:52,381 [INFO] CodeEngine:255 - oldGeneratedFile, /home/amer/Work/Elebel/18jun25/code/model_a/Core/Src/main.c_save
+2025-06-21 04:15:52,521 [INFO] CodeEngine:279 - Generated code: /home/amer/Work/Elebel/18jun25/code/model_a/Core/Src/main.c
+2025-06-21 04:15:53,280 [INFO] ProjectBuilder:2996 - Time for Copy HAL[1] : 59mS.
+2025-06-21 04:15:53,293 [INFO] ProjectBuilder:4304 - Project Generator version: 3.19.2
+2025-06-21 04:15:53,812 [INFO] ConfigFileManager:1483 - The Die is : DIE413
+2025-06-21 04:15:53,828 [INFO] ApiDbMcu:507 - Load IP Config File for FATFS
+2025-06-21 04:15:53,833 [INFO] ApiDbMcu:507 - Load IP Config File for FREERTOS
+2025-06-21 04:15:53,835 [INFO] ApiDbMcu:507 - Load IP Config File for LIBJPEG
+2025-06-21 04:15:53,841 [INFO] ApiDbMcu:507 - Load IP Config File for MBEDTLS
+2025-06-21 04:15:53,851 [INFO] ApiDbMcu:507 - Load IP Config File for USB_DEVICE
+2025-06-21 04:15:53,855 [INFO] ApiDbMcu:507 - Load IP Config File for USB_HOST
+2025-06-21 04:15:55,467 [INFO] ProjectBuilder:4505 - Time for Generating toolchain IDE Files: 2171mS.
+2025-06-21 04:15:55,471 [INFO] ProjectBuilder:2867 - Time for Copy CMSIS : 2mS.
+2025-06-21 04:15:55,473 [INFO] ProjectBuilder:2867 - Time for Copy CMSIS : 0mS.

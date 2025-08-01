@@ -1,0 +1,31 @@
+#ifndef LORA_INIT
+#define LORA_INIT
+#include "main.h"
+
+extern uint8_t uart_rx_buffer[100];
+extern UART_HandleTypeDef huart2;
+uint8_t const band[]="AT+BAND=868000000\r\n";
+uint8_t const password[]="AT+CPIN=LoRaSecure1234\r\n";
+uint8_t const getid[]="AT+NETWORKID\r\n";\
+uint8_t const getadd[]="AT+ADDRESS\r\n";
+
+uint8_t my_id=0;
+uint8_t my_addr=0;
+uint8_t receiver_id=0;
+uint8_t receiver_addr=0;
+
+
+uint8_t get_id();
+uint8_t get_address();
+
+void lora_init();
+void lora_sendinit(uint8_t *pdata);
+uint8_t lora_recive();
+uint8_t process_message(const char *message);
+uint8_t receive_message();
+void lora_send();
+
+
+
+
+#endif
