@@ -1,0 +1,21 @@
+12:33:46 **** Incremental Build of configuration Debug for project teseST7735TFT_Proteus ****
+make -j16 all 
+arm-none-eabi-gcc "../Drivers/st7735/st7735.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"/home/amer/Work/Elebel/11aug25/code/teseST7735TFT_Proteus/Drivers/st7735" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/st7735/st7735.d" -MT"Drivers/st7735/st7735.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/st7735/st7735.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"/home/amer/Work/Elebel/11aug25/code/teseST7735TFT_Proteus/Drivers/st7735" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "teseST7735TFT_Proteus.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/amer/Work/Elebel/11aug25/code/teseST7735TFT_Proteus/STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="teseST7735TFT_Proteus.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: teseST7735TFT_Proteus.elf
+ 
+arm-none-eabi-size  teseST7735TFT_Proteus.elf 
+arm-none-eabi-objdump -h -S teseST7735TFT_Proteus.elf  > "teseST7735TFT_Proteus.list"
+arm-none-eabi-objcopy  -O ihex teseST7735TFT_Proteus.elf  "teseST7735TFT_Proteus.hex"
+   text	   data	    bss	    dec	    hex	filename
+  12276	     20	   1660	  13956	   3684	teseST7735TFT_Proteus.elf
+Finished building: default.size.stdout
+ 
+Finished building: teseST7735TFT_Proteus.hex
+ 
+Finished building: teseST7735TFT_Proteus.list
+ 
+
+12:33:47 Build Finished. 0 errors, 0 warnings. (took 392ms)
+

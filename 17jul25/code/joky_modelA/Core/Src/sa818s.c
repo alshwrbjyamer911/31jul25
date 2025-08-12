@@ -96,7 +96,7 @@ HAL_StatusTypeDef SA818S_SetGroup(uint8_t bandwidth, float tx_freq, float rx_fre
         return HAL_ERROR;
     }
 
-    sprintf(cmd, sizeof(cmd), "AT+DMOSETGROUP=%u,%.4f,%.4f,%04u,%u,%04u\r\n",bandwidth, tx_freq, rx_freq, tx_ctcss, squelch, rx_ctcss);
+    sprintf(cmd, "AT+DMOSETGROUP=%u,%.4f,%.4f,%04u,%u,%04u\r\n",bandwidth, tx_freq, rx_freq, tx_ctcss, squelch, rx_ctcss);
     
     HAL_StatusTypeDef status = SA818S_SendCommand(cmd, response, 1000);
     if (status == HAL_OK && strstr(response, "+DMOSETGROUP:0") != NULL) {

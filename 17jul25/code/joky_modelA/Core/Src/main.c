@@ -40,6 +40,13 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+#define BATTERY_CAPACITY_AH       2.5f       // 2500 mAh
+#define ADC_VREF_VOLTAGE          3.3f       // Reference voltage of ADC
+#define ADC_RESOLUTION            4096.0f    // 12-bit ADC
+#define VCC_VOLTAGE               3.3f       // ACS712 supply voltage
+#define ACS712_SENSITIVITY        0.100f     // V/A for ACS712-20A (100 mV/A)
+#define ACS712_OFFSET_VOLTAGE     (VCC_VOLTAGE/2.0f) // zero current voltage
+#define TIM2_TICK_PERIOD_S        1.0f       // Timer callback period in seconds
 
 /* USER CODE END PM */
 
@@ -57,6 +64,9 @@ TIM_HandleTypeDef htim4;
 UART_HandleTypeDef huart5;
 UART_HandleTypeDef huart1;
 
+uint8_t soc_joky;
+float ACS712_Current;
+float ACS712_Voltage;
 /* USER CODE BEGIN PV */
 
 unsigned char devcode[] = "devcode:0x00";
@@ -130,6 +140,47 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
         //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);  // Toggle LED on PA5
         //OLED update
+
+      //calculate soc each 1 sec
+    	// static uint8_t soc_temp;
+    	// static float Remain_Cap = Total_Cap;
+    	// ACS712_Current = (((HAL_ADC_GetValue(&hadc1)) - (Vcc/2)) / ACS712_Sensitivity);
+    	// Remain_Cap += ACS712_Current;
+    	// soc_joky = (Remain_Cap / Total_Cap) * 100;
+    	// if(soc_joky != soc_temp)
+    	// {
+    		//Send the soc_joky only if it changed from the previous iteration.
+        //....
+
+    	// }
+
+    	// soc_temp = soc_joky;
+      // WriteText(1, 4, speed3);
+      /*========================================================*/
+              // Battery SOC calculation
+        static float Remain_Cap = BATTERY_CAPACITY_AH; // assume full at boot
+        static uint8_t soc_rc_temp = 255;              // force first update
+        static uint8_t soc_joky_temp = 255;
+
+        // Read current from ADC
+        HAL_ADC_Start(&hadc1);
+        HAL_ADC_PollForConversion(&hadc1, 10);
+        uint16_t adc_val = HAL_ADC_GetValue(&hadc1);
+        HAL_ADC_Stop(&hadc1);
+
+        ACS712_Voltage = ((adc_val * ADC_VREF_VOLTAGE) / ADC_RESOLUTION);
+        ACS712_Current = (ACS712_Voltage - ACS712_OFFSET_VOLTAGE) / ACS712_SENSITIVITY;
+
+        // Integrate current to calculate remaining capacity (Ah)
+        float delta_Ah = ACS712_Current * (TIM2_TICK_PERIOD_S / 3600.0f);
+        Remain_Cap += delta_Ah;
+
+        // Clamp capacity
+        if(Remain_Cap > BATTERY_CAPACITY_AH) Remain_Cap = BATTERY_CAPACITY_AH;
+        if(Remain_Cap < 0.0f) Remain_Cap = 0.0f;
+
+        soc_joky = (Remain_Cap / BATTERY_CAPACITY_AH) * 100.0f;
+
     }
 }
 
@@ -185,6 +236,9 @@ int main(void)
 
      // Start ADC
   HAL_ADC_Start(&hadc1);
+  HAL_ADC_Start(&hadc2);
+  HAL_ADC_Start(&hadc3);
+
   TLE9201_SetDirection(1);    // Forward
   TLE9201_SetSpeed(255);
   HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
@@ -207,15 +261,15 @@ int main(void)
 
 	          // Divide ADC range into 3 equal sections
 	          if (adc_value <= 1365) { // 0–1365 (4095/3)
-	              WriteText(1, 1, speed1); // Speed 1
+	              WriteText(1, 2, speed1); // Speed 1
                 TLE9201_SetSpeed(255); // Set speed to 255
               motor_pwm_speed = 255; // Set motor speed to maximum                          
 	          } else if (adc_value <= 2730) { // 1366–2730
-	        	  WriteText(1, 1, speed2); // Speed 2
+	        	  WriteText(1, 2, speed2); // Speed 2
               TLE9201_SetSpeed(200); // Set speed to 200
               motor_pwm_speed = 200; // Set motor speed to 200
 	          } else { // 2731–4095
-	        	  WriteText(1, 1, speed3); // Speed
+	        	  WriteText(1, 2, speed3); // Speed
               TLE9201_SetSpeed(170); // Set speed to 170
               motor_pwm_speed = 170; // Set motor speed to 170
 
@@ -224,6 +278,7 @@ int main(void)
 //	  HAL_UART_Transmit(huart, pData, Size, Timeout)/
 //      HAL_UART_Receive(&huart1, &uart_recive_buffer, 1, HAL_MAX_DELAY);  // Blocking receive
       cmd_received =lora_receive();
+      lora_send_char(soc_joky);
 
       if (cmd_received == 'c') {
         TLE9201_SetSpeed(motor_pwm_speed); // Set motor speed to current PWM speed
@@ -543,7 +598,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 18600;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 50000;
+  htim2.Init.Period = 10000;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)

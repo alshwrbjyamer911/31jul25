@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -61,7 +61,7 @@ main-build: joky_modelA.elf secondary-outputs
 
 # Tool invocations
 joky_modelA.elf joky_modelA.map: $(OBJS) $(USER_OBJS) /home/amer/Work/Elebel/17jul25/code/joky_modelA/STM32F405RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "joky_modelA.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/amer/Work/Elebel/17jul25/code/joky_modelA/STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="joky_modelA.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "joky_modelA.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/amer/Work/Elebel/17jul25/code/joky_modelA/STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="joky_modelA.map" -Wl,--gc-sections -static -u _printf_float -u _scanf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -1,0 +1,9 @@
+2025-07-31 12:58:34,519 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SWT SessionManagerDBus: Failed to UnregisterClient: GDBus.Error:org.freedesktop.DBus.Error.NoReply: Message recipient disconnected from message bus without replying
+2025-07-31 18:26:08,996 [INFO] Activator:176 - 
+
+
+2025-07-31 18:26:08,998 [INFO] Activator:177 - !SESSION log4j initialized
+2025-07-31 18:26:14,335 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2025-07-31 18:26:36,185 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2025-07-31 18:26:36,186 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2025-07-31 18:26:36,186 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
