@@ -1,0 +1,10 @@
+01:14:55 **** Build of configuration Debug for project test_jokyonmystm ****
+make -j16 all 
+arm-none-eabi-size  test_jokyonmystm.elf 
+   text	   data	    bss	    dec	    hex	filename
+  12480	     12	   1716	  14208	   3780	test_jokyonmystm.elf
+Finished building: default.size.stdout
+ 
+
+01:14:55 Build Finished. 0 errors, 0 warnings. (took 75ms)
+

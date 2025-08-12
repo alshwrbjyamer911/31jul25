@@ -1,0 +1,123 @@
+#include "as32.h"
+
+uint8_t param[6];
+uint8_t config[5];
+
+// 16-byte encryption key command (starts with 0xC6)
+const uint8_t enc_key[17] = {
+    0xC6, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F, 0x70,
+    0x81, 0x92, 0xA3, 0xB4, 0xC5, 0xD6, 0xE7, 0xF8, 0x09
+};
+const uint8_t p_reader[3]={0xC1 ,0xC1 ,0xC1};//cmd sent to module to read paarameter configured on module
+extern uint8_t param[6];
+
+const uint8_t general[2]={0,0};//
+
+const uint8_t powersaving[2]={0,1};
+
+const uint8_t wakeup[2]={1,0};/*/uart open wireless chalel open and the only differenace between it and general mode is
+before the packet is transmitted the wake code is automatically increased so that it can wake up the reciver in powersaving mode*/
+
+const uint8_t sleep[2]={1,1};// this mode we can configure  module on it
+
+
+
+// =================================== Initialization & Setup =======================================================//
+uint8_t lora_init(){
+	lora_set_mode(sleep);
+	lora_send_enc_key();
+	//	0xC6 + 16byte Configure key Data encryption
+	lora_set_mode(general);
+
+}
+/*
+void    lora_set_mode(const uint8_t * mod){
+	if((mod[0]==0) && (mod[1]==0)){
+
+		HAL_GPIO_WritePin(MD0_GPIO_Port,MD0_Pin, RESET);
+		HAL_GPIO_WritePin(MD1_GPIO_Port, MD1_Pin, RESET);
+	}
+	else if((mod[0]==0) && (mod[1]==1)){
+
+		HAL_GPIO_WritePin(MD0_GPIO_Port,MD0_Pin,  RESET);
+		HAL_GPIO_WritePin(MD1_GPIO_Port, MD1_Pin,SET);
+	}
+	else if((mod[0]==1) && (mod[1]==0)){
+
+		HAL_GPIO_WritePin(MD0_GPIO_Port,MD0_Pin, SET);
+		HAL_GPIO_WritePin(MD1_GPIO_Port, MD1_Pin, RESET);
+	}
+	else if((mod[0]==1) && (mod[1]==1)){
+
+		HAL_GPIO_WritePin(MD0_GPIO_Port,MD0_Pin, SET);
+		HAL_GPIO_WritePin(MD1_GPIO_Port, MD1_Pin, SET);
+	}
+	// Set mode pins
+
+}*/
+// ========================================= Configuration =============================================================================================
+void    lora_send_config(void){
+	lora_set_mode(sleep);
+	uint8_t aconfig[6]={0xc0,config[0],config[1],config[2],config[3],config[4]};
+	HAL_UART_Transmit(&huart2, aconfig, 6, HAL_MAX_DELAY);
+	lora_set_mode(general);
+}
+
+void    lora_store_config(uint8_t addh, uint8_t addl, uint8_t speed, uint8_t chan, uint8_t option){
+	config[0]=addh;config[1]=addl;
+	config[2]=speed;
+	config[3]=chan;
+	config[4]=option;
+}
+
+
+void    lora_send_enc_key(void){
+	HAL_UART_Transmit(&huart2, enc_key, 17, 10);
+	return lora_wait_ok();
+}
+
+
+void lora_config(uint8_t config){
+	lora_set_mode(sleep);
+	//	MD0	Input (weak pull-up)	Works with MD1 to select one of four operation modes.
+	//	2	MD1	Input (weak pull-up)	Works with MD0 to select one of four operation modes.
+	//	HAL_UART_Transmit(&huart2, pData, Size, Timeout)
+	lora_set_mode(general);
+}
+uint8_t lora_send_data(uint8_t *data, uint8_t len){
+
+	uint8_t transmition_status[5];
+	HAL_UART_Transmit(&huart2, data, sizeof(data), 100);
+	return 0;
+}
+
+//uint8_t lora_recive(){
+//	HAL_UART_Receive(&huart2, , Size, Timeout)
+//}
+
+// === Utility ===
+uint8_t lora_wait_ok(){
+	// Wait for ASCII "OK"
+	uint8_t transmition_status[5];//data buffer to store status back
+	HAL_UART_Receive(&huart2,transmition_status , 5, HAL_MAX_DELAY);
+
+	if(transmition_status[0]=='O'){
+		memset(transmition_status,0,5);
+		return 0;//0 meaning ok its done
+	}
+	else{
+
+		memset(transmition_status,5,0);
+		return 1;//1 mean error the transmition is
+	}
+
+}
+uint8_t lora_read_params(){
+	// Read back config with 0xC1 0xC1 0xC1
+	lora_set_mode(sleep);
+	HAL_UART_Transmit(&huart2, p_reader, 3, 100);
+	HAL_UART_Receive(&huart2, param, 6, HAL_MAX_DELAY);
+
+}
+
+

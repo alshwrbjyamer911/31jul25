@@ -1,0 +1,5 @@
+../Core/Src/as32.c:4:9:lora_init	2
+../Core/Src/as32.c:22:6:lora_config	1
+../Core/Src/as32.c:27:9:lora_send_data	2
+../Core/Src/as32.c:43:9:lora_recive	1
+../Core/Src/as32.c:46:9:checkerr	2

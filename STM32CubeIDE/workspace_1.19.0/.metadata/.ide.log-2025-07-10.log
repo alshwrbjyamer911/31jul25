@@ -1,0 +1,11 @@
+2025-07-10 04:18:43,494 [INFO] WebApp:194 - Connection lost
+2025-07-10 14:36:33,132 [INFO] WebApp:191 - Connection restablished
+2025-07-10 14:36:36,196 [INFO] WebApp:194 - Connection lost
+2025-07-10 14:36:36,494 [INFO] WebApp:191 - Connection restablished
+2025-07-10 15:37:10,128 [INFO] Gpio:278 - dependency for GPIO [SPI1, UART5, USART1]
+2025-07-10 15:42:56,068 [INFO] Gpio:278 - dependency for GPIO [SPI1, UART5, USART1]
+2025-07-10 15:42:56,164 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-07-10 15:42:56,294 [INFO] Gpio:278 - dependency for GPIO [SPI1, UART5, USART1]
+2025-07-10 15:42:56,361 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-07-10 15:42:56,473 [INFO] Gpio:278 - dependency for GPIO [SPI1, UART5, USART1]
+2025-07-10 15:42:56,533 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
